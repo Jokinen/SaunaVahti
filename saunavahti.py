@@ -1,4 +1,4 @@
-import Camera_manager
+from camera_manager import Camera_manager
 
 class Saunavahti:
     def __init__(self):
@@ -15,4 +15,4 @@ class Saunavahti:
 
     def loop(self):
         while self.running:
-            # pass
+            pass

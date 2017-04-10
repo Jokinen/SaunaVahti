@@ -1,7 +1,8 @@
+# -*- coding: iso-8859-1 -*-
 import io
 import time
 import picamera
-import TEMP_manager
+from temperature_manager import TEMP_manager
 
 class Camera_manager:
     def __init__(self):
