@@ -6,7 +6,7 @@ class Saunavahti:
         self.start()
 
     def setup(self):
-        self.running = false
+        self.running = False
         self.camera = Camera_manager()
 
     def start(self):
