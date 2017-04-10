@@ -1,5 +1,5 @@
 from camera_manager import Camera_manager
-from Server_manager import Server_manager
+from server_manager import Server_manager
 
 class Saunavahti:
     def __init__(self):
