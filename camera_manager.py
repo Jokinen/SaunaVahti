@@ -17,5 +17,5 @@ class Camera_manager:
         # Camera warm-up time
         time.sleep(2)
         camera.annotate_background = picamera.Color('black')
-        camera.annotate_text = self.temp.get_temp_as_celsius() + '(arvioitu tavoitelämpötila saavutetaan' + self.temp.estimate_time() + 'kuluttua)'
+        camera.annotate_text = str(self.temp.get_temp_as_celsius()) + '(arvioitu tavoitelämpötila saavutetaan' + str(self.temp.estimate_time()) + 'kuluttua)'
         camera.capture('source.png')
