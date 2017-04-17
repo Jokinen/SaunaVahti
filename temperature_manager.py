@@ -62,6 +62,6 @@ class TEMP_manager:
         temps_to_go = self.target_temp - last_temp['temp']
 
         ticks = temps_to_go / average_increase
-        time_to_go = ticks * average_time.total_seconds()
+        time_to_go = ticks * average_time
 
         return str(math.ceil(time_to_go / 60))
