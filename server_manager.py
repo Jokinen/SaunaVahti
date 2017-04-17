@@ -1,38 +1,43 @@
-import io
-import socket
-import struct
-from PIL import Image
+import SimpleHTTPServer
+import SocketServer as socketserver
+import os
+import threading
 
-class Server_manager:
+class MyHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
+    path_to_image = 'source.png'
+    img = open(path_to_image, 'rb')
+    statinfo = os.stat(path_to_image)
+    img_size = statinfo.st_size
+    print(img_size)
+
+def do_HEAD(self):
+    self.send_response(200)
+    self.send_header("Content-type", "image/jpg")
+    self.send_header("Content-length", img_size)
+    self.end_headers()
+
+def do_GET(self):
+    self.send_response(200)
+    self.send_header("Content-type", "image/jpg")
+    self.send_header("Content-length", img_size)
+    self.end_headers()
+    f = open(path_to_image, 'rb')
+    self.wfile.write(f.read())
+    f.close()
+
+class Server(socketserver.ThreadingMixIn, socketserver.TCPServer):
+    def __init__(self, server_adress, RequestHandlerClass):
+        self.allow_reuse_address = True
+        socketserver.TCPServer.__init__(self, server_adress, RequestHandlerClass, False)
+
+class Server_Manager:
     def __init__(self):
-        pass
+        HOST, PORT = "localhost", 9999
+        self.server = Server((HOST, PORT), MyHandler)
+        self.server.server_bind()
+        self.server.server_activate()
+        server_thread = threading.Thread(target=self.server.serve_forever)
+        server_thread.start()
 
-    def setup(self):
-        # Start a socket listening for connections on 0.0.0.0:8000 (0.0.0.0 means
-        # all interfaces)
-        self.server_socket = socket.socket()
-        self.server_socket.bind(('0.0.0.0', 8002))
-        self.server_socket.listen(0)
-
-    def start(self):
-        self.setup()
-
-        # Accept a single connection and make a file-like object out of it
-        connection = server_socket.accept()[0].makefile('rb')
-        try:
-            # Run a viewer with an appropriate command line. Uncomment the mplayer
-            # version if you would prefer to use mplayer instead of VLC
-            cmdline = ['vlc', '--demux', 'h264', '-']
-            #cmdline = ['mplayer', '-fps', '25', '-cache', '1024', '-']
-            player = subprocess.Popen(cmdline, stdin=subprocess.PIPE)
-            while True:
-                # Repeatedly read 1k of data from the connection and write it to
-                # the media player's stdin
-                data = connection.read(1024)
-                if not data:
-                    break
-                player.stdin.write(data)
-        finally:
-            connection.close()
-            server_socket.close()
-            player.terminate()
+if __name__ == "__main__":
+    server_manager = Server_Manager()
