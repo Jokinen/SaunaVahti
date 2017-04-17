@@ -56,7 +56,7 @@ class TEMP_manager:
             return 'undef'
 
         average_increase = reduce(lambda x,y: x['temp'] + y['temp'], self.recorded_temps)
-        average_time = reduce(lambda x,y: y['time'] + x['time'], self.recorded_temps) - self.recorded_temps[0]
+        average_time = reduce(lambda x,y: y['time'] + x['time'], self.recorded_temps) - self.recorded_temps[0].time
 
         last_temp = self.recorded_temps[len(self.recorded_temps) - 1]
         temps_to_go = self.target_temp - last_temp
