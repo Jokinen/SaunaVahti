@@ -38,6 +38,3 @@ class Server_Manager:
         self.server.server_activate()
         server_thread = threading.Thread(target=self.server.serve_forever)
         server_thread.start()
-
-if __name__ == "__main__":
-    server_manager = Server_Manager()
