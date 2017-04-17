@@ -1,4 +1,4 @@
-# -*- coding: iso-8859-1 -*-
+from future import unicode_literals
 import io
 import socket
 import struct
