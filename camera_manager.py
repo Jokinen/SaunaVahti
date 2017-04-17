@@ -1,4 +1,4 @@
-from future import unicode_literals
+# -*- coding: iso-8859-1 -*-
 import io
 import socket
 import struct
@@ -17,5 +17,6 @@ class Camera_manager:
         # Camera warm-up time
         time.sleep(2)
         camera.annotate_background = picamera.Color('black')
-        camera.annotate_text = str(self.temp.get_temp_as_celsius()) + '(arvioitu tavoitelämpötila saavutetaan' + str(self.temp.estimate_time()) + 'kuluttua)'
+        byte_string = str(self.temp.get_temp_as_celsius()) + '(arvioitu tavoitelämpötila saavutetaan' + str(self.temp.estimate_time()) + 'kuluttua)'
+        camera.annotate_text = byte_string.decode('utf-8')
         camera.capture('source.png')
