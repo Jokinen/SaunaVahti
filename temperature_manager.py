@@ -41,9 +41,10 @@ class TEMP_manager:
     def get_temp_as_celsius(self):
         temp = self.convert_data()
         converted_temp = temp * 0.0625
+        t = dt.datetime.now()
         self.recorded_temps.append({
             'temp': converted_temp,
-            'time': dt.datetime.now()
+            'time': time.mktime(t.timetuple())
         })
 
         return converted_temp
@@ -55,7 +56,7 @@ class TEMP_manager:
             return 'undef'
 
         average_increase = reduce(lambda x,y: x['temp'] + y['temp'], self.recorded_temps)
-        average_time = reduce(lambda x,y: y['time'] + x['time'], self.recorded_temps)
+        average_time = reduce(lambda x,y: y['time'] + x['time'], self.recorded_temps) - self.recorded_temps[0]
 
         last_temp = self.recorded_temps[len(self.recorded_temps) - 1]
         temps_to_go = self.target_temp - last_temp
