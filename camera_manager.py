@@ -11,6 +11,7 @@ class Camera_manager:
         self.temp = TEMP_manager()
 
     def take_image(self):
+        camera = picamera.PiCamera()
         camera.resolution = (1024, 768)
         camera.start_preview()
         # Camera warm-up time
