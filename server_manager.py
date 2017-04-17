@@ -30,7 +30,7 @@ class Server(socketserver.ThreadingMixIn, socketserver.TCPServer):
         self.allow_reuse_address = True
         socketserver.TCPServer.__init__(self, server_adress, RequestHandlerClass, False)
 
-class Server_Manager:
+class Server_manager:
     def __init__(self):
         HOST, PORT = "localhost", 9999
         self.server = Server((HOST, PORT), MyHandler)
