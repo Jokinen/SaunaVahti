@@ -59,7 +59,7 @@ class TEMP_manager:
         average_time = reduce(lambda x,y: y['time'] + x['time'], self.recorded_temps) - self.recorded_temps[0]['time']
 
         last_temp = self.recorded_temps[len(self.recorded_temps) - 1]
-        temps_to_go = self.target_temp - last_temp
+        temps_to_go = self.target_temp - last_temp['temp']
 
         ticks = temps_to_go / average_increase
         time_to_go = ticks * average_time.total_seconds()
