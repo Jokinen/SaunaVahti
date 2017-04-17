@@ -32,7 +32,7 @@ class Server(socketserver.ThreadingMixIn, socketserver.TCPServer):
 
 class Server_manager:
     def __init__(self):
-        HOST, PORT = "localhost", 9999
+        HOST, PORT = "localhost", 8080
         self.server = Server((HOST, PORT), MyHandler)
         self.server.server_bind()
         self.server.server_activate()
