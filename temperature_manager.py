@@ -55,8 +55,15 @@ class TEMP_manager:
         if skip:
             return 'undef'
 
-        average_increase = reduce(lambda x,y: print(x['temp']), self.recorded_temps, 0) / len(self.recorded_temps)
-        average_time = reduce(lambda x,y: x['time'] + y['time'], self.recorded_temps, 0) - self.recorded_temps[0]['time']
+        complete_time_increase = 0
+        complete_temp_increase = 0
+        for temp in self.recorded_temps:
+            complete_time_increase += temp['time']
+            complete_temp_increase += temp['temp']
+
+        datapoint_count = len(self.recorded_temps)
+        average_increase = complete_temp_increase / datapoint_count
+        average_time = (complete_time_increase - self.recorded_temps[0]['time']) / datapoint_count
 
         last_temp = self.recorded_temps[len(self.recorded_temps) - 1]
         temps_to_go = self.target_temp - last_temp['temp']
