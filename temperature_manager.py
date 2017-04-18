@@ -75,12 +75,12 @@ class TEMP_manager:
         print('Saved temps:')
         for temp in self.recorded_temps:
             temp_dif = temp['temp'] - last_temp
-            last_temp = temp['temp']
             if last_temp is 0:
                 growth_speed = 0
             else:
                 growth_speed = (temp_dif / average_time_increase)
             temp_growth_s.append(growth_speed)
+            last_temp = temp['temp']
             print('Temp: ' + str(temp['temp']) + '. At time: ' + str(temp['time']) + '. Speed: ' + str(growth_speed))
         print('End of saved temps.')
 
