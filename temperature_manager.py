@@ -41,13 +41,20 @@ class TEMP_manager:
     def get_temp_as_celsius(self):
         temp = self.convert_data()
         converted_temp = temp * 0.0625
+        self.save_temp(converted_temp)
+
+        return converted_temp
+
+    def save_temp(self, converted_temp):
         t = dt.datetime.now()
         self.recorded_temps.append({
             'temp': converted_temp,
             'time': time.mktime(t.timetuple())
         })
 
-        return converted_temp
+        if len(self.recorded_temps) > 3:
+            # only keep track of last three measurements
+            self.recorded_temps = self.recorded_temps[-3:]
 
     def estimate_time(self):
         skip = len(self.recorded_temps) <= 1
@@ -55,25 +62,27 @@ class TEMP_manager:
         if skip:
             return 'undef'
 
-        last_temp = 0
-        temp_acc = 0
-        for temp in self.recorded_temps:
-            temp_dif = temp['temp'] - last_temp
-            temp_acc += temp_dif
-            last_temp = temp['temp']
+        datapoint_count = len(self.recorded_temps)
 
         first_measure = self.recorded_temps[len(self.recorded_temps) - 1]['time']
         last_measure = self.recorded_temps[0]['time']
         complete_time_increase = 1 + first_measure - last_measure
-
-        datapoint_count = len(self.recorded_temps)
-        average_temp_increase = temp_acc / datapoint_count
         average_time_increase = (complete_time_increase) / datapoint_count
+
+        last_temp = 0
+        temp_growth_s = []
+        for temp in self.recorded_temps:
+            temp_dif = temp['temp'] - last_temp
+            last_temp = temp['temp']
+            temp_growth_s.push(temp_dif / average_temp_increase)
+
+        # C/s
+        average_temp_growth_s = reduce(lambda x, y: x + y, temp_growth_s) / len(temp_growth_s)
 
         last_temp = self.recorded_temps[len(self.recorded_temps) - 1]
         temps_to_go = self.target_temp - last_temp['temp']
 
-        ticks = temps_to_go / average_temp_increase
-        time_to_go = ticks * average_time_increase
+        seconds_to_go = temps_to_go / average_temp_growth_s
+        min_to_go = seconds_to_go / 60
 
-        return str(math.ceil(time_to_go / 60))
+        return str(math.ceil(min_to_go))
