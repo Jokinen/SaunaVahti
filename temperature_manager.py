@@ -55,12 +55,20 @@ class TEMP_manager:
         if skip:
             return 'undef'
 
-        complete_time_increase = 1 + self.recorded_temps[len(self.recorded_temps) - 1]['time'] - self.recorded_temps[0]['time']
-        complete_temp_increase = 1 + self.recorded_temps[len(self.recorded_temps) - 1]['temp'] - self.recorded_temps[0]['temp']
+        last_temp = 0
+        temp_acc = 0
+        for temp in self.recorded_temps:
+            temp_dif = temp['temp'] - last_temp
+            temp_acc += temp_dif
+            last_temp = tempt['temp']
+
+        first_measure = self.recorded_temps[len(self.recorded_temps) - 1]['time']
+        last_measure = self.recorded_temps[0]['time']
+        complete_time_increase = 1 + first_measure - last_measure
 
         datapoint_count = len(self.recorded_temps)
-        average_temp_increase = complete_temp_increase / datapoint_count
-        average_time_increase = (complete_time_increase - self.recorded_temps[0]['time']) / datapoint_count
+        average_temp_increase = temp_acc / datapoint_count
+        average_time_increase = (complete_time_increase) / datapoint_count
 
         last_temp = self.recorded_temps[len(self.recorded_temps) - 1]
         temps_to_go = self.target_temp - last_temp['temp']
