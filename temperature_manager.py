@@ -71,13 +71,17 @@ class TEMP_manager:
 
         last_temp = 0
         temp_growth_s = []
+        print('Saved temps:')
         for temp in self.recorded_temps:
             temp_dif = temp['temp'] - last_temp
             last_temp = temp['temp']
             temp_growth_s.append(temp_dif / average_time_increase)
+            print('Temp: ' + temp['temp'] + '. At time: ' + temp['time'])
+        print('End of saved temps.')
 
         # C/s
         average_temp_growth_s = reduce(lambda x, y: x + y, temp_growth_s) / len(temp_growth_s)
+        print('average temp growth speed: ' + average_temp_growth_s)
 
         last_temp = self.recorded_temps[len(self.recorded_temps) - 1]
         temps_to_go = self.target_temp - last_temp['temp']
