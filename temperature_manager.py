@@ -76,7 +76,7 @@ class TEMP_manager:
             temp_dif = temp['temp'] - last_temp
             last_temp = temp['temp']
             temp_growth_s.append(temp_dif / average_time_increase)
-            print('Temp: ' + temp['temp'] + '. At time: ' + temp['time'])
+            print('Temp: ' + str(temp['temp']) + '. At time: ' + str(temp['time'])
         print('End of saved temps.')
 
         # C/s
