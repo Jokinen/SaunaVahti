@@ -17,6 +17,6 @@ class Camera_manager:
         # Camera warm-up time
         time.sleep(2)
         self.camera.annotate_background = picamera.Color('black')
-        byte_string = str(self.temp.get_temp_as_celsius()) + '(arvioitu tavoitelampotila saavutetaan' + str(self.temp.estimate_time()) + 'kuluttua)'
+        byte_string = str(self.temp.get_temp_as_celsius()) + ' C (valmis' + str(self.temp.estimate_time()) + ' min kuluttua)'
         self.camera.annotate_text = byte_string.decode('utf-8')
         self.camera.capture('source.png')
