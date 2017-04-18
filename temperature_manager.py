@@ -55,8 +55,8 @@ class TEMP_manager:
         if skip:
             return 'undef'
 
-        complete_time_increase = self.recorded_temps[len(self.recorded_temps) - 1]['time'] - self.recorded_temps[0]['time']
-        complete_temp_increase = self.recorded_temps[len(self.recorded_temps) - 1]['temp'] - self.recorded_temps[0]['temp']
+        complete_time_increase = 1 + self.recorded_temps[len(self.recorded_temps) - 1]['time'] - self.recorded_temps[0]['time']
+        complete_temp_increase = 1 + self.recorded_temps[len(self.recorded_temps) - 1]['temp'] - self.recorded_temps[0]['temp']
 
         datapoint_count = len(self.recorded_temps)
         average_temp_increase = complete_temp_increase / datapoint_count
