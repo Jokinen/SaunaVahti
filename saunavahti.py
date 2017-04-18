@@ -20,4 +20,4 @@ class Saunavahti:
     def loop(self):
         while self.running:
             self.camera.take_image()
-            time.sleep(1)
+            time.sleep(5)

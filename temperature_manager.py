@@ -66,8 +66,9 @@ class TEMP_manager:
 
         first_measure = self.recorded_temps[len(self.recorded_temps) - 1]['time']
         last_measure = self.recorded_temps[0]['time']
-        complete_time_increase = 1 + first_measure - last_measure
+        complete_time_increase = first_measure - last_measure
         average_time_increase = (complete_time_increase) / datapoint_count
+        print('Average time between measurements: ' + str(average_time_increase) + 's')
 
         last_temp = 0
         temp_growth_s = []
@@ -75,8 +76,9 @@ class TEMP_manager:
         for temp in self.recorded_temps:
             temp_dif = temp['temp'] - last_temp
             last_temp = temp['temp']
-            temp_growth_s.append(temp_dif / average_time_increase)
-            print('Temp: ' + str(temp['temp']) + '. At time: ' + str(temp['time']))
+            growth_speed = temp_dif / average_time_increase
+            temp_growth_s.append(growth_speed)
+            print('Temp: ' + str(temp['temp']) + '. At time: ' + str(temp['time']) + '. Speed: ' + str(growth_speed))
         print('End of saved temps.')
 
         # C/s
@@ -85,8 +87,10 @@ class TEMP_manager:
 
         last_temp = self.recorded_temps[len(self.recorded_temps) - 1]
         temps_to_go = self.target_temp - last_temp['temp']
+        print('Temps until finished: ' + str(temps_to_go))
 
         seconds_to_go = temps_to_go / average_temp_growth_s
         min_to_go = seconds_to_go / 60
+        print('Minutes until finished: ' + str(min_to_go))
 
         return str(math.ceil(min_to_go))
