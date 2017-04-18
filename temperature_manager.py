@@ -81,7 +81,7 @@ class TEMP_manager:
 
         # C/s
         average_temp_growth_s = reduce(lambda x, y: x + y, temp_growth_s) / len(temp_growth_s)
-        print('average temp growth speed: ' + average_temp_growth_s)
+        print('average temp growth speed: ' + str(average_temp_growth_s))
 
         last_temp = self.recorded_temps[len(self.recorded_temps) - 1]
         temps_to_go = self.target_temp - last_temp['temp']
