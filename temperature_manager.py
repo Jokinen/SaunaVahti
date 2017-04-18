@@ -74,7 +74,7 @@ class TEMP_manager:
         for temp in self.recorded_temps:
             temp_dif = temp['temp'] - last_temp
             last_temp = temp['temp']
-            temp_growth_s.append(temp_dif / average_temp_increase)
+            temp_growth_s.append(temp_dif / average_time_increase)
 
         # C/s
         average_temp_growth_s = reduce(lambda x, y: x + y, temp_growth_s) / len(temp_growth_s)
