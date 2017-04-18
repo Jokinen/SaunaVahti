@@ -60,7 +60,7 @@ class TEMP_manager:
         for temp in self.recorded_temps:
             temp_dif = temp['temp'] - last_temp
             temp_acc += temp_dif
-            last_temp = tempt['temp']
+            last_temp = temp['temp']
 
         first_measure = self.recorded_temps[len(self.recorded_temps) - 1]['time']
         last_measure = self.recorded_temps[0]['time']
